@@ -24,7 +24,7 @@ class ListViewModel @Inject constructor(
 
 
     init {
-        _status.value = UiListStatus.Loading
+        getCharacters()
     }
 
 
@@ -38,11 +38,11 @@ class ListViewModel @Inject constructor(
             else
                 UiListStatus.ListContent(listCharacters)
 
-            Log.d("VMM", "${listCharacters.toString()}")
+            Log.d("VMM", "getCharacters():: ${listCharacters.toString()}")
         }
         catch (ex : Exception){
             _status.value  = UiListStatus.Error(ex.stackTraceToString())
-            Log.d("VMM", "${ex.stackTraceToString() }")
+            Log.d("VMM", "getCharacters():: ERROR ${ex.stackTraceToString() }")
         }
 
 

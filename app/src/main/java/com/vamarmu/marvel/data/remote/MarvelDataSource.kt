@@ -2,7 +2,6 @@ package com.vamarmu.marvel.data.remote
 
 import com.vamarmu.data.source.RemoteDataSource
 import com.vamarmu.domain.MarvelCharacter
-import com.vamarmu.domain.MarvelDetailCharacter
 import com.vamarmu.marvel.data.remote.models.CharacterDataWrapperResponse
 import retrofit2.Response
 import javax.inject.Inject
@@ -20,7 +19,8 @@ class MarvelDataSource @Inject constructor(
 
     override suspend fun getDetailCharacter(
         id: Int
-    ): MarvelDetailCharacter {
-        TODO("Not yet implemented")
+    ): MarvelCharacter? {
+        val response: Response<CharacterDataWrapperResponse> = marvelService.getCharactersId(id)
+        return response.body()?.data?.results?.toListMarvelCharacter()?.firstOrNull()
     }
 }

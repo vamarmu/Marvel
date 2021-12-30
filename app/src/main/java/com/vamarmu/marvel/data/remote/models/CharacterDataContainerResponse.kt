@@ -2,7 +2,7 @@ package com.vamarmu.marvel.data.remote.models
 
 import com.google.gson.annotations.SerializedName
 
-data class CharacterDataContainerResponse(
+data class  CharacterDataContainerResponse(
     /**
      * The requested offset (number of skipped results) of the call.
      */
