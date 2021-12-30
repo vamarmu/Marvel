@@ -1,20 +1,20 @@
 package com.vamarmu.marvel.ui.list
 
 import android.os.Bundle
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Spinner
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.dialog.MaterialDialogs
-import com.google.android.material.progressindicator.CircularProgressIndicator
+import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.vamarmu.marvel.R
 import com.vamarmu.marvel.databinding.ListFragmentBinding
+import com.vamarmu.marvel.ui.detail.DetailFragment
 import com.vamarmu.marvel.ui.extension.toListItem
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,7 +28,8 @@ class ListFragment : Fragment() {
 
     private val listAdapter : ListAdapter by lazy {
         ListAdapter(emptyList()){
-            Toast.makeText(requireContext(),"CLICK ${it.title}",Toast.LENGTH_SHORT).show()
+            val bundle = bundleOf(DetailFragment.ARG_CHARACTERS_ID to it.id)
+            binding.root.findNavController().navigate(R.id.action_listFragment_to_detailFragment, bundle)
         }
     }
 
@@ -44,6 +45,10 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).supportActionBar?.apply {
+            title =requireContext().resources.getString(R.string.app_name)
+        }
+
 
         viewModel.status.observe(viewLifecycleOwner){
             when(it){
@@ -54,8 +59,6 @@ class ListFragment : Fragment() {
             }
         }
         binding.list.adapter = listAdapter
-        viewModel.getCharacters()
-
 
 
     }
@@ -66,9 +69,9 @@ class ListFragment : Fragment() {
     }
 
 
-    private fun updateItems(newItems : List<Item>){
+    private fun updateItems(newItemDataViews : List<ItemDataView>){
         binding.progress.isVisible=false
-        listAdapter.items = newItems
+        listAdapter.itemDataViews = newItemDataViews
     }
 
     private fun showLoading(){

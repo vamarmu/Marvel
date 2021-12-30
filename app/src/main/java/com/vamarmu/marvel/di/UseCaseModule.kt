@@ -1,7 +1,9 @@
 package com.vamarmu.marvel.di
 
+
 import com.vamarmu.data.repository.Repository
 import com.vamarmu.usecases.GetCharactersUseCase
+import com.vamarmu.usecases.GetDetailCharactersUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,13 +20,11 @@ object UseCasesModule {
     fun charactersUseCaseProvider (
         repository: Repository
     ) : GetCharactersUseCase = GetCharactersUseCase(repository = repository)
-/*
+
     @Provides
+    @ViewModelScoped
     fun getDetailCharacterUseCaseProvider (
-        repository: Repository
-    ) : GetDetailCharacterUseCase = GetDetailCharacterUseCase() //TODO not implemented
-
- */
-
+        repository: Repository,
+    ) : GetDetailCharactersUseCase = GetDetailCharactersUseCase(repository = repository)
 
 }

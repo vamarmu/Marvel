@@ -18,7 +18,6 @@ object DataModule {
         remoteDataSource : RemoteDataSource
     ) : Repository =  Repository(
         remoteDataSource = remoteDataSource
-
     )
 
 

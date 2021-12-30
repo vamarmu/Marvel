@@ -1,15 +1,13 @@
 package com.vamarmu.marvel.ui.extension
 
 import com.vamarmu.domain.MarvelCharacter
-import com.vamarmu.domain.MarvelImage
-import com.vamarmu.marvel.ui.list.Item
+import com.vamarmu.marvel.ui.list.ItemDataView
 
-fun MarvelCharacter.toItem() = Item(
+fun MarvelCharacter.toItem() = ItemDataView(
+    id = this.id?:0,
     title = this.name?:"",
-    thumb = this.thumbnail.getUrl()
+    thumbnail = this.thumbnail
 )
 
 fun List<MarvelCharacter>.toListItem() = this.map { it.toItem() }
 
-
-fun MarvelImage?.getUrl() = this?.let { "$path.$extension".replace("http://", "https://") } ?:""

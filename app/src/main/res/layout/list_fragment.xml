@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:indeterminate="true"
+        android:visibility="invisible"
         />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -20,9 +21,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
+        android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
-        tools:listitem="@layout/list_item"/>
+        tools:listitem="@layout/list_item"
+        tools:visibility="visible"/>
 
 
 </FrameLayout>
