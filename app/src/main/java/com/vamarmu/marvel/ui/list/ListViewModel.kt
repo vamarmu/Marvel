@@ -1,6 +1,6 @@
 package com.vamarmu.marvel.ui.list
 
-import android.util.Log
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,25 +24,24 @@ class ListViewModel @Inject constructor(
 
 
     init {
+
         getCharacters()
     }
 
 
     fun getCharacters() = viewModelScope.launch {
         try {
-            _status.value  = UiListStatus.Loading
 
+            _status.value  = UiListStatus.Loading
             val listCharacters: List<MarvelCharacter>?  = getCharactersUseCase.invoke()
             _status.value  = if (listCharacters.isNullOrEmpty())
                 UiListStatus.NoContent
             else
                 UiListStatus.ListContent(listCharacters)
-
-            Log.d("VMM", "getCharacters():: ${listCharacters.toString()}")
         }
         catch (ex : Exception){
-            _status.value  = UiListStatus.Error(ex.stackTraceToString())
-            Log.d("VMM", "getCharacters():: ERROR ${ex.stackTraceToString() }")
+            _status.value  = UiListStatus.Error(ex.message?:"Unknown error")
+
         }
 
 
