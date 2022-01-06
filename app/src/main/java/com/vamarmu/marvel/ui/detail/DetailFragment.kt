@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -70,6 +71,16 @@ class DetailFragment : Fragment() {
             description.text = characters.description
             Glide.with(requireContext()).load(characters.thumbnail.getUrlWithAspectRatio(
                 AspectRatioImage.landscape_amazing)).into(thumbnail)
+            characters.comics.items?.let { comics ->
+                showResourceSummary("Comics", comics.mapNotNull { it.name })
+            }
+            characters.series.items?.let { comics ->
+                showResourceSummary("Series", comics.mapNotNull { it.name })
+            }
+            characters.stories.items?.let { comics ->
+                showResourceSummary("Stories", comics.mapNotNull { it.name })
+            }
+
         }
 
     }
@@ -82,6 +93,20 @@ class DetailFragment : Fragment() {
         binding.progress.isVisible = false
         Snackbar.make(requireView(),error, Snackbar.LENGTH_SHORT)
             .show()
+    }
+
+    private fun showResourceSummary(title : String, resourceList : List<String>){
+       binding.data.addView(TextView(requireContext()).apply {
+           text = title
+           setTextAppearance(R.style.TextAppearance_AppCompat_Title)
+       })
+
+        binding.data.addView(TextView(requireContext()).apply {
+           text = resourceList.joinToString(separator = "\n")
+       })
+
+
+
     }
 
     companion object {
