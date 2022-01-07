@@ -1,5 +1,5 @@
 # Marvel
-Marvel is a demo Android application based on Jectpack and  MVVM architecture.
+Marvel is a demo Android application based on Jetpack and  MVVM architecture.
 Fetching data from the network  via repository pattern.
 
 
