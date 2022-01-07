@@ -1,6 +1,5 @@
 package com.vamarmu.marvel.ui.detail
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,12 +37,10 @@ class DetailViewModel @Inject constructor(
                 UiDetailStatus.DetailContent(it)
             }?:UiDetailStatus.NoContent
 
-
-            Log.d("VMM", characters.toString())
         }
         catch (ex : Exception){
             _status.value  = UiDetailStatus.Error(ex.stackTraceToString())
-            Log.d("VMM", ex.stackTraceToString())
+
         }
 
 
