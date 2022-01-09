@@ -13,7 +13,7 @@ import com.vamarmu.marvel.ui.extension.getUrlWithAspectRatio
 
 
 
-class ItemsListAdapter( private val onClickItem:(ItemDataView) -> Unit ) :
+class ItemsListAdapter( private val onClickItem:(ItemDataView) -> Unit, private val onItemsCreated: (position: Int, total: Int)->Unit ) :
     ListAdapter<ItemDataView, ItemsListAdapter.ItemViewHolder>(ITEM_COMPARATOR) {
 
 
@@ -28,7 +28,9 @@ class ItemsListAdapter( private val onClickItem:(ItemDataView) -> Unit ) :
         val item = getItem(position)
         holder.bind(item)
         holder.itemView.setOnClickListener { onClickItem(item) }
+        onItemsCreated(position,itemCount)
     }
+
 
 
 
