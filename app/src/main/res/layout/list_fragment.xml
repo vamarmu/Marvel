@@ -23,7 +23,7 @@
         android:clipToPadding="false"
         android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"
+        app:spanCount="@integer/items_span_count"
         tools:listitem="@layout/list_item"
         tools:visibility="visible"/>
 
