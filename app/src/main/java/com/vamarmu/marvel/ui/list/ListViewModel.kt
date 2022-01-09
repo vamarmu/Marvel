@@ -22,26 +22,35 @@ class ListViewModel @Inject constructor(
     val status : LiveData<UiListStatus>
         get() = _status
 
+    private val list : MutableList<MarvelCharacter> = mutableListOf()
+
 
     init {
-
         getCharacters()
     }
 
 
-    fun getCharacters() = viewModelScope.launch {
+    fun getCharacters(offset: Int=0) = viewModelScope.launch {
+
         try {
 
             _status.value  = UiListStatus.Loading
-            val listCharacters: List<MarvelCharacter>?  = getCharactersUseCase.invoke()
+
+            val listCharacters: List<MarvelCharacter>? = if (offset==0 && list.size>0){
+               list.toList()
+            }
+            else {
+                getCharactersUseCase.invoke(offset)
+            }
             _status.value  = if (listCharacters.isNullOrEmpty())
                 UiListStatus.NoContent
-            else
-                UiListStatus.ListContent(listCharacters)
+            else{
+                list.addAll(listCharacters)
+                UiListStatus.ListContent(list)
+            }
         }
         catch (ex : Exception){
             _status.value  = UiListStatus.Error(ex.message?:"Unknown error")
-
         }
 
 

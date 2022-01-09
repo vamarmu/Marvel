@@ -6,5 +6,5 @@ class GetCharactersUseCase (
     private val repository: Repository
 ) {
 
-    suspend fun invoke() = repository.getCharacters()
+    suspend fun invoke(offset : Int) = repository.getCharacters(offset)
 }

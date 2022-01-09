@@ -10,6 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.vamarmu.marvel.R
 import com.vamarmu.marvel.databinding.ListFragmentBinding
@@ -26,10 +27,17 @@ class ListFragment : Fragment() {
     private val viewModel : ListViewModel by viewModels()
 
     private val listAdapter : ItemsListAdapter by lazy {
-        ItemsListAdapter(){
-            val bundle = bundleOf(DetailFragment.ARG_CHARACTERS_ID to it.id)
-            binding.root.findNavController().navigate(R.id.action_listFragment_to_detailFragment, bundle)
-        }
+        ItemsListAdapter(
+            onClickItem = fun(itemDataView){
+                val bundle = bundleOf(DetailFragment.ARG_CHARACTERS_ID to itemDataView.id)
+                binding.root.findNavController().navigate(R.id.action_listFragment_to_detailFragment, bundle)
+            },
+            onItemsCreated = fun (position, size){
+                if(position+1 == size) {
+                    viewModel.getCharacters(position+1)
+                }
+            }
+        )
     }
 
     override fun onCreateView(

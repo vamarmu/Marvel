@@ -2,7 +2,7 @@ package com.vamarmu.marvel.data.remote.models
 
 import com.google.gson.annotations.SerializedName
 
-data class  CharacterDataContainerResponse(
+data class  DataContainerResponse<T>(
     /**
      * The requested offset (number of skipped results) of the call.
      */
@@ -31,5 +31,5 @@ data class  CharacterDataContainerResponse(
      * The list of characters returned by the call.
      */
     @SerializedName("results")
-    var results : List<CharacterResponse>
+    var results : List<T>
 )

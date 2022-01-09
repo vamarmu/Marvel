@@ -5,7 +5,7 @@ import com.vamarmu.domain.MarvelCharacter
 
 interface RemoteDataSource {
 
-    suspend fun getCharacters() : List<MarvelCharacter>?
+    suspend fun getCharacters(offset : Int) : List<MarvelCharacter>?
 
     suspend fun getDetailCharacter(id : Int) : MarvelCharacter?
 }
