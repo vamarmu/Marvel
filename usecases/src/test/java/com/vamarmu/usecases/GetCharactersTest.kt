@@ -10,6 +10,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
 import org.mockito.kotlin.whenever
 
 
@@ -29,8 +30,8 @@ class GetCharactersTest {
     @Test
     fun getAllCharacters(){
         runBlocking {
-            whenever( repository.getCharacters()).thenReturn(getMockCharacters())
-            val  result = getCharactersUseCase.invoke()
+            whenever( repository.getCharacters(any())).thenReturn(getMockCharacters())
+            val  result = getCharactersUseCase.invoke(any())
             Assert.assertEquals(getMockCharacters().size, result?.size)
 
 

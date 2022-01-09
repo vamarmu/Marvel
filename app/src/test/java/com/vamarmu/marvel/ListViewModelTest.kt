@@ -69,7 +69,7 @@ class ListViewModelTest {
     @Test
     fun showNoContent (){
         testDispatcher.runBlockingTest   {
-            whenever(getCharactersUseCase.invoke()).thenReturn(null)
+            whenever(getCharactersUseCase.invoke(any())).thenReturn(null)
             vm.status.observeForever(observer)
             vm.getCharacters()
             val inOrder: InOrder = inOrder(observer)
