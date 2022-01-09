@@ -5,12 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.vamarmu.marvel.R
 import com.vamarmu.marvel.databinding.ListFragmentBinding
@@ -26,11 +26,18 @@ class ListFragment : Fragment() {
 
     private val viewModel : ListViewModel by viewModels()
 
-    private val listAdapter : ListAdapter by lazy {
-        ListAdapter(emptyList()){
-            val bundle = bundleOf(DetailFragment.ARG_CHARACTERS_ID to it.id)
-            binding.root.findNavController().navigate(R.id.action_listFragment_to_detailFragment, bundle)
-        }
+    private val listAdapter : ItemsListAdapter by lazy {
+        ItemsListAdapter(
+            onClickItem = fun(itemDataView){
+                val bundle = bundleOf(DetailFragment.ARG_CHARACTERS_ID to itemDataView.id)
+                binding.root.findNavController().navigate(R.id.action_listFragment_to_detailFragment, bundle)
+            },
+            onItemsCreated = fun (position, size){
+                if(position+1 == size) {
+                    viewModel.getCharacters(position+1)
+                }
+            }
+        )
     }
 
     override fun onCreateView(
@@ -71,7 +78,7 @@ class ListFragment : Fragment() {
 
     private fun updateItems(newItemDataViews : List<ItemDataView>){
         binding.progress.isVisible=false
-        listAdapter.itemDataViews = newItemDataViews
+        listAdapter.submitList(newItemDataViews)
     }
 
     private fun showLoading(){
@@ -83,10 +90,5 @@ class ListFragment : Fragment() {
         Snackbar.make(requireView(),error, Snackbar.LENGTH_SHORT)
             .show()
     }
-
-
-
-
-
 
 }

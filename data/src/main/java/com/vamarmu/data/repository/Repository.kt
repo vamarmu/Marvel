@@ -6,8 +6,8 @@ import com.vamarmu.domain.MarvelCharacter
 class Repository (
     private val remoteDataSource: RemoteDataSource){
 
-    suspend fun getCharacters( ) : List<MarvelCharacter>? {
-        return remoteDataSource.getCharacters()
+    suspend fun getCharacters(offset:Int ) : List<MarvelCharacter>? {
+        return remoteDataSource.getCharacters(offset)
     }
 
     suspend fun getDetailCharacter( id : Int) : MarvelCharacter? {
