@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -26,8 +25,8 @@ class ListFragment : Fragment() {
 
     private val viewModel : ListViewModel by viewModels()
 
-    private val listAdapter : ListAdapter by lazy {
-        ListAdapter(emptyList()){
+    private val listAdapter : ItemsListAdapter by lazy {
+        ItemsListAdapter(){
             val bundle = bundleOf(DetailFragment.ARG_CHARACTERS_ID to it.id)
             binding.root.findNavController().navigate(R.id.action_listFragment_to_detailFragment, bundle)
         }
@@ -71,7 +70,7 @@ class ListFragment : Fragment() {
 
     private fun updateItems(newItemDataViews : List<ItemDataView>){
         binding.progress.isVisible=false
-        listAdapter.itemDataViews = newItemDataViews
+        listAdapter.submitList(newItemDataViews)
     }
 
     private fun showLoading(){
@@ -83,10 +82,5 @@ class ListFragment : Fragment() {
         Snackbar.make(requireView(),error, Snackbar.LENGTH_SHORT)
             .show()
     }
-
-
-
-
-
 
 }
